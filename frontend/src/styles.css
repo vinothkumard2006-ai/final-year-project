@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  font-family: Inter, system-ui, sans-serif;
+  --theme-bg: #0b1120;
+  --theme-panel: #11212f;
+  --theme-panel-strong: #142a3e;
+  --theme-border: #1f2c44;
+  --theme-text: #e5ecf1;
+  --theme-muted: #96a9c0;
+  --theme-accent: #16a085;
+  --theme-accent-2: #e76f51;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #0b1120 0%, #12263b 45%, #1c2d45 100%);
+  color: var(--theme-text);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.bg-slate-950 {
+  background-color: var(--theme-bg) !important;
+}
+
+.bg-slate-900\/80 {
+  background-color: rgba(17, 21, 43, 0.88) !important;
+}
+
+.bg-slate-900 {
+  background-color: var(--theme-panel) !important;
+}
+
+.border-slate-800 {
+  border-color: var(--theme-border) !important;
+}
+
+.text-slate-100 {
+  color: var(--theme-text) !important;
+}
+
+.text-slate-300 {
+  color: #d7dcf3 !important;
+}
+
+.text-slate-400 {
+  color: var(--theme-muted) !important;
+}
+
+.text-cyan-400 {
+  color: #a78bfa !important;
+}
+
+.text-emerald-400 {
+  color: #34d399 !important;
+}
+
+.text-amber-400 {
+  color: #fbbf24 !important;
+}
+
+.text-red-400 {
+  color: #fb7185 !important;
+}

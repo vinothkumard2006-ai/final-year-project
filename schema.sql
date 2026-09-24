@@ -1,0 +1,73 @@
+CREATE DATABASE IF NOT EXISTS network_monitoring_db;
+USE network_monitoring_db;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(80) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(20) DEFAULT 'VIEWER',
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_users_username (username)
+);
+
+CREATE TABLE IF NOT EXISTS devices (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  ip VARCHAR(45) NOT NULL UNIQUE,
+  mac VARCHAR(20),
+  status VARCHAR(20) DEFAULT 'ACTIVE',
+  last_seen DATETIME DEFAULT CURRENT_TIMESTAMP,
+  risk_score FLOAT DEFAULT 0,
+  INDEX idx_devices_ip (ip)
+);
+
+CREATE TABLE IF NOT EXISTS network_flows (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+  source_ip VARCHAR(45),
+  destination_ip VARCHAR(45),
+  protocol VARCHAR(20),
+  packet_count INT DEFAULT 0,
+  byte_count INT DEFAULT 0,
+  INDEX idx_flows_time (timestamp),
+  INDEX idx_flows_source (source_ip),
+  INDEX idx_flows_device (source_ip)
+);
+
+CREATE TABLE IF NOT EXISTS threats (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+  source_ip VARCHAR(45),
+  severity VARCHAR(20) DEFAULT 'MEDIUM',
+  description TEXT,
+  score FLOAT DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS alerts (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+  title VARCHAR(255) NOT NULL,
+  severity VARCHAR(20) DEFAULT 'MEDIUM',
+  message TEXT
+);
+
+CREATE TABLE IF NOT EXISTS incidents (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+  title VARCHAR(255) NOT NULL,
+  status VARCHAR(20) DEFAULT 'OPEN',
+  severity VARCHAR(20) DEFAULT 'MEDIUM'
+);
+
+CREATE TABLE IF NOT EXISTS risk_scores (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+  score FLOAT DEFAULT 0,
+  summary VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS system_settings (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  key_name VARCHAR(80) UNIQUE NOT NULL,
+  value_text VARCHAR(255) NOT NULL
+);
